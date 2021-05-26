@@ -435,6 +435,10 @@
   responses map, or exception.  The :output-ch will allow you to
   inspect [job responses] the server returned and handle potential
   errors/failures accordingly (retrying etc).
+   
+  If there is a requirement to correlate the return value from bulk-chann
+  with some external identifier, you can wrap each chunk in the envelope {:job job ...rest};
+  only job will be the full envelope will then also be returned in the out-ch.
 
   If you close! the `:input-ch` it will close the underlying resources
   and exit cleanly (consuming all jobs that remain in queues).
@@ -450,7 +454,7 @@
                                                  (fn []
                                                    (async/go-loop []
                                                      (if-let [job (async/<! in-ch)]
-                                                       (let [result (async/<! (f job))]
+                                                       (let [result (async/<! (f (map (fn [job] (or (:job job) job)))))]
                                                          (async/>! out-ch [job result])
                                                          (recur))
                                                        ::exit))))
@@ -496,8 +500,8 @@
                    #(request-chan client (build-map request-map %))
                    max-concurrent-requests)
          (async/go-loop
-             [payload []
-              timeout-ch (async/timeout flush-interval)]
+          [payload []
+           timeout-ch (async/timeout flush-interval)]
            (let [[chunk ch] (async/alts! [flush-ch timeout-ch input-ch])]
              (cond
                (#{flush-ch timeout-ch} ch)
