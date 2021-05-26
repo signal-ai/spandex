@@ -1,5 +1,12 @@
 # spandex
+
 <!-- [![Build Status](https://travis-ci.org/mpenet/spandex.svg?branch=master)](https://travis-ci.org/mpenet/spandex) -->
+
+Fork of [mpenet/spandex](https://github.com/mpenet/spandex).
+
+Changes from master:
+
+- Add wrapper to `bulk-chan` (https://github.com/signal-ai/spandex/commit/9daa4091bb36fcc16d76853a2276699c35ea3419)
 
 Elasticsearch new low level [rest-client](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html) wrapper
 
@@ -15,37 +22,37 @@ too, see ["Benchmarking REST client and transport client"](https://www.elastic.c
 
 Not to mention it supports some interesting features:
 
-* compatibility with any Elasticsearch version
+- compatibility with any Elasticsearch version
 
-* load balancing across all available nodes
+- load balancing across all available nodes
 
-* failover in case of node failures and upon specific response codes
+- failover in case of node failures and upon specific response codes
 
-* failed connection penalization
+- failed connection penalization
 
-* persistent connections
+- persistent connections
 
-* trace logging of requests and responses
+- trace logging of requests and responses
 
-* optional automatic discovery of cluster nodes (also known as sniffing)
+- optional automatic discovery of cluster nodes (also known as sniffing)
 
 ## Goals
 
-* Be minimal & performant
+- Be minimal & performant
 
-* RING inspired
+- RING inspired
 
-* All "exotic" features should be optional
+- All "exotic" features should be optional
 
-* Not a giant DSL over another DSL, just maps everywhere.
+- Not a giant DSL over another DSL, just maps everywhere.
   Read ElasticSearch doc -> done, not another layer of indirection
 
-* Provide minimal (and optional) utils to do the boring stuff
+- Provide minimal (and optional) utils to do the boring stuff
   (bulk, scroll queries, compose urls)
 
-* Can do async via simple callbacks based api or `core.async`
+- Can do async via simple callbacks based api or `core.async`
 
-* Provide [specs](https://github.com/mpenet/spandex/blob/master/src/clj/qbits/spandex/spec.clj)
+- Provide [specs](https://github.com/mpenet/spandex/blob/master/src/clj/qbits/spandex/spec.clj)
 
 ### Setup
 
@@ -101,7 +108,7 @@ pass a raw string but also a sequence (potentially 2d) of encodable
 things, keywords, .toString'able objects that make sense or nil (which
 could be caused by a missing :url key).
 
-``` clojure
+```clojure
 (s/request c {:url [:foo :bar :_search] ...})
 (s/request c {:url [:foo [:bar :something "more"] :_search] ...})
 (s/request c {:url :_search ...})
@@ -109,6 +116,7 @@ could be caused by a missing :url key).
 (s/request c {:url (java.util.UUID/randomUUID) ...})
 (s/request c {...}) ;; defaults to "/"
 ```
+
 ### Blocking requests
 
 ```clojure
@@ -131,7 +139,7 @@ could be caused by a missing :url key).
 
 ### Async requests: `core.async/promise-chan`
 
-``` clojure
+```clojure
 (async/<!! (s/request-chan c {:url "/urls/url/"
                               :method :get
                               :body {:query {:match {:message "this is a test"}}}}))
@@ -142,7 +150,7 @@ could be caused by a missing :url key).
 Scrolling via core.async (fully NIO internally), interruptible if you
 async/close! the returned chan.
 
-``` clojure
+```clojure
 (async/go
   (let [ch (s/scroll-chan client {:url "/foo/_search" :body {:query {:match_all {}}}})]
     (loop []
@@ -153,7 +161,7 @@ async/close! the returned chan.
 
 ### Bulk requests scheduling
 
-"Faux streaming" of _bulk requests (flushes bulk request after
+"Faux streaming" of \_bulk requests (flushes bulk request after
 configurable interval or threshold. Uses request-chan internally, so
 it's quite cheap.
 
