@@ -1,7 +1,7 @@
 (def es-client-version "7.12.1")
-(defproject cc.qbits/spandex "0.7.11-SNAPSHOT"
+(defproject com.signal-ai/spandex "0.7.11-SNAPSHOT"
   :description "Clojure Wrapper of the new/official ElasticSearch REST client"
-  :url "https://github.com/mpenet/spandex"
+  :url "https://github.com/signal-ai/spandex"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.10.1"]
@@ -12,7 +12,13 @@
                  [cc.qbits/commons "0.5.2"]
                  [cheshire "5.9.0"]
                  [ring/ring-codec "1.1.2"]]
-  :deploy-repositories [["snapshots" :clojars] ["releases" :clojars]]
+  :deploy-repositories [["releases" {:url "https://clojars.org/repo"
+                                     :username :env/clojars_username
+                                     :password :env/clojars_token
+                                     :sign-releases false}]
+                        ["snapshots" {:url "https://clojars.org/repo"
+                                      :username :env/clojars_username
+                                      :password :env/clojars_token}]]
   :source-paths ["src/clj"]
   :global-vars {*warn-on-reflection* true}
   :pedantic? :warn
