@@ -454,7 +454,7 @@
                                                  (fn []
                                                    (async/go-loop []
                                                      (if-let [job (async/<! in-ch)]
-                                                       (let [result (async/<! (f (map (fn [job] (or (:job job) job)))))]
+                                                       (let [result (async/<! (f (map #(or (:job %) %) job)))]
                                                          (async/>! out-ch [job result])
                                                          (recur))
                                                        ::exit))))
