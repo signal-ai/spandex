@@ -437,7 +437,7 @@
   errors/failures accordingly (retrying etc).
    
   If there is a requirement to correlate the return value from bulk-chann
-  with some external identifier, you can wrap each chunk in the envelope {:job job ...rest};
+  with some external identifier, you can wrap each chunk in the envelope {:qbits.spandex/bulk-job job ...rest};
   only job will be the full envelope will then also be returned in the out-ch.
 
   If you close! the `:input-ch` it will close the underlying resources
@@ -454,7 +454,7 @@
                                                  (fn []
                                                    (async/go-loop []
                                                      (if-let [job (async/<! in-ch)]
-                                                       (let [result (async/<! (f (map #(or (:job %) %) job)))]
+                                                       (let [result (async/<! (f (map #(or (::bulk-job %) %) job)))]
                                                          (async/>! out-ch [job result])
                                                          (recur))
                                                        ::exit))))

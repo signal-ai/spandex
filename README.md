@@ -1,14 +1,25 @@
 # spandex
 
-<!-- [![Build Status](https://travis-ci.org/mpenet/spandex.svg?branch=master)](https://travis-ci.org/mpenet/spandex) -->
+[![Clojars Project](https://img.shields.io/clojars/v/com.signal-ai/spandex.svg)](https://clojars.org/com.signal-ai/spandex) [![CircleCI](https://circleci.com/gh/signal-ai/spandex.svg?style=shield&circle-token=c4d6462815228d6e0f99ae87fed3aaaa727b8859)](https://circleci.com/gh/signal-ai/spandex)
 
-Fork of [mpenet/spandex](https://github.com/mpenet/spandex).
+Elasticsearch new low level [rest-client](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html) wrapper
+
+## Fork Status
+
+This is a Signal AI fork of [mpenet/spandex](https://github.com/mpenet/spandex).
 
 Changes from master:
 
-- Add wrapper to `bulk-chan` (https://github.com/signal-ai/spandex/commit/9daa4091bb36fcc16d76853a2276699c35ea3419)
+- Add wrapper to `bulk-chan` [`9daa4091bb36fcc16d76853a2276699c35ea3419`](https://github.com/signal-ai/spandex/commit/9daa4091bb36fcc16d76853a2276699c35ea3419)
 
-Elasticsearch new low level [rest-client](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html) wrapper
+### Releasing
+
+To release, change the version in `project.clj` and push to `master`
+
+Versioning should match:
+
+`0.7.7-1[-SNAPSHOT]`
+where `0.7.7` is the upstream version of spandex, `1` is our fork version, and `-SNAPSHOT` is optional and indicates development releases.
 
 ## Why?
 
