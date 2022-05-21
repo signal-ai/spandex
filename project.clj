@@ -1,5 +1,5 @@
 (def es-client-version "7.12.1")
-(defproject com.signal-ai/spandex "0.7.11-1"
+(defproject com.signal-ai/spandex "0.7.10-1"
   :description "Clojure Wrapper of the new/official ElasticSearch REST client"
   :url "https://github.com/signal-ai/spandex"
   :license {:name "Eclipse Public License"
